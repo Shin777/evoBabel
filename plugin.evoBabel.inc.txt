@@ -1,6 +1,6 @@
 <?php
-// êîíôèãóðàöèÿ  &synch_TV=ids TV äëÿ ñèíõðîíèçàöèè;text;13,14 &synch_template=ids øàáëîíîâ äëÿ ñèíõðîíèçàöèè;text;7
-// ñîáûòèÿ  OnPageNotFound,OnDocFormSave
+// ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ñ  &synch_TV=ids TV Ð´Ð»Ñ ÑÐ¸Ð½Ñ…Ñ€Ð¾Ð½Ð¸Ð·Ð°Ñ†Ð¸Ð¸;text;13,14 &synch_template=ids ÑˆÐ°Ð±Ð»Ð¾Ð½Ð¾Ð² Ð´Ð»Ñ ÑÐ¸Ð½Ñ…Ñ€Ð¾Ð½Ð¸Ð·Ð°Ñ†Ð¸Ð¸;text;7
+// ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ  OnPageNotFound,OnDocFormSave
 
 if(!defined('MODX_BASE_PATH')){die('What are you doing? Get out of here!');}
 
@@ -9,15 +9,15 @@ $tvs_table=$modx->getFullTableName('site_tmplvar_contentvalues');
 
 $e =& $modx->event;
 switch ($e->name ) {
-    case 'OnPageNotFound'://ïåðåàäðåñàöèÿ íà íóæíóþ ñòðàíèöó 404, óêàçàòü åå â ÿçûêîâîì ÷àíêå
+    case 'OnPageNotFound'://Ð¿ÐµÑ€ÐµÐ°Ð´Ñ€ÐµÑÐ°Ñ†Ð¸Ñ Ð½Ð° Ð½ÑƒÐ¶Ð½ÑƒÑŽ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñƒ 404, ÑƒÐºÐ°Ð·Ð°Ñ‚ÑŒ ÐµÐµ Ð² ÑÐ·Ñ‹ÐºÐ¾Ð²Ð¾Ð¼ Ñ‡Ð°Ð½ÐºÐµ
 		$docid=0;
-		$id=$modx->runSnippet("lang",array('a'=>'Ñòðàíèöà íå íàéäåíà'));
+		$id=$modx->runSnippet("lang",array('a'=>'Ð¡Ñ‚Ñ€Ð°Ð½Ð¸Ñ†Ð° Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ð°'));
 		$docid=(int)$id;
 		if($docid==0){
-			$id=$modx->runSnippet("lang",array('a'=>'Ãëàâíàÿ ñòðàíèöà'));
+			$id=$modx->runSnippet("lang",array('a'=>'Ð“Ð»Ð°Ð²Ð½Ð°Ñ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ð°'));
 			$docid=(int)$id;
 			if($docid==0){
-				$id=$modx->runSnippet("lang",array('a'=>'Êîðíåâàÿ ïàïêà'));
+				$id=$modx->runSnippet("lang",array('a'=>'ÐšÐ¾Ñ€Ð½ÐµÐ²Ð°Ñ Ð¿Ð°Ð¿ÐºÐ°'));
 				$docid=(int)$id;
 			}
 		}
@@ -25,7 +25,7 @@ switch ($e->name ) {
 			$modx->sendRedirect($modx->makeUrl($docid));
 		}
 		break ;
-	case 'OnDocFormSave'://ñèíõðîíèçàöèÿ âûáðàííûõ TV íà âûáðàííîì øàáëîíå
+	case 'OnDocFormSave'://ÑÐ¸Ð½Ñ…Ñ€Ð¾Ð½Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ñ… TV Ð½Ð° Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ð¾Ð¼ ÑˆÐ°Ð±Ð»Ð¾Ð½Ðµ
 		if($e->params['mode']=='upd'){
 			$docid=$e->params['id'];
 			include_once("functions.evoBabel.php");

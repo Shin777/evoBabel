@@ -1,14 +1,14 @@
 <?php
 if(!defined('MODX_BASE_PATH')){die('What are you doing? Get out of here!');}
 
-function checkPage($id){//проверка существования страницы
+function checkPage($id){//РїСЂРѕРІРµСЂРєР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёСЏ СЃС‚СЂР°РЅРёС†С‹
 	global $modx;
 	$result=$modx->db->getValue($modx->db->query("SELECT id FROM ".$modx->getFullTableName('site_content')." WHERE id={$id} LIMIT 0,1"));
 	return $result;
 	
 }
 
-function checkActivePage($id){//проверка существования страницы и активности страницы
+function checkActivePage($id){//РїСЂРѕРІРµСЂРєР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёСЏ СЃС‚СЂР°РЅРёС†С‹ Рё Р°РєС‚РёРІРЅРѕСЃС‚Рё СЃС‚СЂР°РЅРёС†С‹
 	global $modx;
 	$result=$modx->db->getValue($modx->db->query("SELECT id FROM ".$modx->getFullTableName('site_content')." WHERE id={$id} AND deleted=0 AND published=1 LIMIT 0,1"));
 	return $result;
@@ -34,7 +34,7 @@ function getCurLangId($id){
 
 
 
-function getRelations($id){//получаем строку отношений для ресурса
+function getRelations($id){//РїРѕР»СѓС‡Р°РµРј СЃС‚СЂРѕРєСѓ РѕС‚РЅРѕС€РµРЅРёР№ РґР»СЏ СЂРµСЃСѓСЂСЃР°
 	global $modx;
 	$res=$modx->db->getValue($modx->db->query("SELECT description FROM ".$modx->getFullTableName('site_content')." WHERE id={$id} LIMIT 0,1"));
 	return $res;
@@ -55,7 +55,7 @@ function getRelationsArray($relations){ //array ['lang_alias']=>['lang_page_id']
 	return $arr;
 }
 
-function getFullRelationsArray($id,$langsArray){//полные отношения - недостающие заменяем на корневые языки
+function getFullRelationsArray($id,$langsArray){//РїРѕР»РЅС‹Рµ РѕС‚РЅРѕС€РµРЅРёСЏ - РЅРµРґРѕСЃС‚Р°СЋС‰РёРµ Р·Р°РјРµРЅСЏРµРј РЅР° РєРѕСЂРЅРµРІС‹Рµ СЏР·С‹РєРё
 	global $modx;
 	if(!isset($langsArray[$id])){
 		$relations=getRelations($id);

@@ -1,13 +1,13 @@
 <?php
-// çíà÷åíèÿ ïî óìîë÷àíèþ íà âêëàäêå Ñâîéñòâà - &lang_template_id=id øàáëîíà ÿçûêà;text;11 &currlang=ÿçûê ïî óìîë÷àíèþ;text;ru
+// Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ Ð½Ð° Ð²ÐºÐ»Ð°Ð´ÐºÐµ Ð¡Ð²Ð¾Ð¹ÑÑ‚Ð²Ð° - &lang_template_id=id ÑˆÐ°Ð±Ð»Ð¾Ð½Ð° ÑÐ·Ñ‹ÐºÐ°;text;11 &currlang=ÑÐ·Ñ‹Ðº Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ;text;ru
 
-//èñïîëüçîâàíèå - âûçûâàåì â ñàìîì âåðõó ñàéòà [[switchLang? &id=`[*id*]`]]
-// ýòî íóæíî, ò.ê. ïåðåâîäû ïèøåì â ñåññèþ è îíè äîëæíû áûòü äî òîãî, êàê ìû ê íèì îáðàòèìñÿ
-// â íóæíîì ìåñòå ïðîïèñûâàåì [+switchLang+] - âûâîä ïåðåêëþ÷àëêè ÿçûêîâ
+//Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ðµ - Ð²Ñ‹Ð·Ñ‹Ð²Ð°ÐµÐ¼ Ð² ÑÐ°Ð¼Ð¾Ð¼ Ð²ÐµÑ€Ñ…Ñƒ ÑÐ°Ð¹Ñ‚Ð° [[switchLang? &id=`[*id*]`]]
+// ÑÑ‚Ð¾ Ð½ÑƒÐ¶Ð½Ð¾, Ñ‚.Ðº. Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´Ñ‹ Ð¿Ð¸ÑˆÐµÐ¼ Ð² ÑÐµÑÑÐ¸ÑŽ Ð¸ Ð¾Ð½Ð¸ Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ Ð´Ð¾ Ñ‚Ð¾Ð³Ð¾, ÐºÐ°Ðº Ð¼Ñ‹ Ðº Ð½Ð¸Ð¼ Ð¾Ð±Ñ€Ð°Ñ‚Ð¸Ð¼ÑÑ
+// Ð² Ð½ÑƒÐ¶Ð½Ð¾Ð¼ Ð¼ÐµÑÑ‚Ðµ Ð¿Ñ€Ð¾Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÐ¼ [+switchLang+] - Ð²Ñ‹Ð²Ð¾Ð´ Ð¿ÐµÑ€ÐµÐºÐ»ÑŽÑ‡Ð°Ð»ÐºÐ¸ ÑÐ·Ñ‹ÐºÐ¾Ð²
 
 
 
-//øàáëîíû âûâîäà ïî óìîë÷àíèþ
+//ÑˆÐ°Ð±Ð»Ð¾Ð½Ñ‹ Ð²Ñ‹Ð²Ð¾Ð´Ð° Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ
 $activeRow=isset($activeRow)?$activeRow:'<div id="curr_lang"><img src="assets/images/langs/flag_[+alias+].jpg"> <a href="javascript:;">[+name+]</a> <img src="site/imgs/lang_pict.jpg" alt="" id="switcher"></div>';
 $unactiveRow=isset($unactiveRow)?$unactiveRow:'<div><img src="assets/images/langs/flag_[+alias+].jpg"> &nbsp;<a href="[+url+]">[+name+]</a></div>';
 $unactiveOuter=isset($unactiveOuter)?$unactiveOuter:'<div class="other_langs">[+wrapper+]</div>';
@@ -17,7 +17,7 @@ $content_table=$modx->getFullTableName('site_content');
 $tvs_table=$modx->getFullTableName('site_tmplvar_contentvalues');
 $out='';
 $langs=array();
-$others=array();//ìàññèâ äðóãèõ ÿçûêîâ (êðîìå òåêóùåãî)
+$others=array();//Ð¼Ð°ÑÑÐ¸Ð² Ð´Ñ€ÑƒÐ³Ð¸Ñ… ÑÐ·Ñ‹ÐºÐ¾Ð² (ÐºÑ€Ð¾Ð¼Ðµ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾)
 
 include_once 'assets/snippets/evoBabel/functions.evoBabel.php';
 $siteLangs=getSiteLangs($lang_template_id);
@@ -25,34 +25,34 @@ $curr_lang_id=getCurLangId($id);
 $relations=getRelations($id);
 $relArray=getRelationsArray($relations);
 
-//ìàññèâ ÿçûêîâ ñàéòà êðîìå òåêóùåãî
+//Ð¼Ð°ÑÑÐ¸Ð² ÑÐ·Ñ‹ÐºÐ¾Ð² ÑÐ°Ð¹Ñ‚Ð° ÐºÑ€Ð¾Ð¼Ðµ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾
 foreach($siteLangs as $k=>$v){
 	if($k!=$curr_lang_id){
 		$others[$k]=$v;
 	}
 }
 
-//âûâîäèì òåêóùèé ÿçûê
+//Ð²Ñ‹Ð²Ð¾Ð´Ð¸Ð¼ Ñ‚ÐµÐºÑƒÑ‰Ð¸Ð¹ ÑÐ·Ñ‹Ðº
 $currLang=str_replace(array('[+alias+]','[+name+]'),array($siteLangs[$curr_lang_id]['alias'],$siteLangs[$curr_lang_id]['name']),$activeRow);
 
-//óñòàíàâëèâàåì è âûâîäèì ïðî÷èå ÿçûêè (êðîìå òåêóùåãî)
+//ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð¸ Ð²Ñ‹Ð²Ð¾Ð´Ð¸Ð¼ Ð¿Ñ€Ð¾Ñ‡Ð¸Ðµ ÑÐ·Ñ‹ÐºÐ¸ (ÐºÑ€Ð¾Ð¼Ðµ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾)
 $unactiveRows='';
 foreach($others as $k=>$v){
-	if(isset($relArray[$v['alias']])&&checkActivePage($relArray[$v['alias']])){//åñëè åñòü ñâÿçü è ýòà ñòðàíèöà àêòèâíà
+	if(isset($relArray[$v['alias']])&&checkActivePage($relArray[$v['alias']])){//ÐµÑÐ»Ð¸ ÐµÑÑ‚ÑŒ ÑÐ²ÑÐ·ÑŒ Ð¸ ÑÑ‚Ð° ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ð° Ð°ÐºÑ‚Ð¸Ð²Ð½Ð°
 		$url=$relArray[$v['alias']];
 	}
-	else{//íåò ñâÿçè ëèáî ñòðàíèöà íå àêòèâíà -> ïðîâåðÿåì ðîäèòåëÿ
+	else{//Ð½ÐµÑ‚ ÑÐ²ÑÐ·Ð¸ Ð»Ð¸Ð±Ð¾ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ð° Ð½Ðµ Ð°ÐºÑ‚Ð¸Ð²Ð½Ð° -> Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»Ñ
 		$parent_id=$modx->db->getValue($modx->db->query("SELECT parent FROM {$content_table} WHERE id={$id} AND published=1 AND deleted=0 AND parent!=0 AND template!=$lang_template_id"));
-		if(!$parent_id){//åñëè íåò ðîäèòåëÿ, îòïðàâëÿåì íà ãëàâíóþ ñòðàíèöó ÿçûêà
+		if(!$parent_id){//ÐµÑÐ»Ð¸ Ð½ÐµÑ‚ Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»Ñ, Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼ Ð½Ð° Ð³Ð»Ð°Ð²Ð½ÑƒÑŽ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñƒ ÑÐ·Ñ‹ÐºÐ°
 			$url=$k;	
 		}
-		else{//åñëè ðîäèòåëü åñòü, ïðîâåðÿåì åãî ñâÿçè
+		else{//ÐµÑÐ»Ð¸ Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»ÑŒ ÐµÑÑ‚ÑŒ, Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ ÐµÐ³Ð¾ ÑÐ²ÑÐ·Ð¸
 			$parent_relations=getRelations($parent_id);
 			$relParentArray=getRelationsArray($parent_relations);
-			if(isset($relParentArray[$v['alias']])&&checkActivePage($relParentArray[$v['alias']])){//ó ðîäèòåëÿ àêòèâíàÿ ñâÿçü
+			if(isset($relParentArray[$v['alias']])&&checkActivePage($relParentArray[$v['alias']])){//Ñƒ Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»Ñ Ð°ÐºÑ‚Ð¸Ð²Ð½Ð°Ñ ÑÐ²ÑÐ·ÑŒ
 				$url=$relParentArray[$v['alias']];
 			}
-			else{//èíà÷å -> íà ãëàâíóþ ñòðàíèöó ÿçûêà
+			else{//Ð¸Ð½Ð°Ñ‡Ðµ -> Ð½Ð° Ð³Ð»Ð°Ð²Ð½ÑƒÑŽ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñƒ ÑÐ·Ñ‹ÐºÐ°
 				$url=$k;
 			}
 		}
@@ -63,11 +63,11 @@ $otherLangs.=str_replace(array('[+wrapper+]'),array($unactiveRows),$unactiveOute
 
 $out.=$currLang.$otherLangs;
 
-// óñòàíàâëèâàåì ïëåéñõîëäåð [+switchLang+] äëÿ âûâîäà ÿçûêîâ
+// ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð¿Ð»ÐµÐ¹ÑÑ…Ð¾Ð»Ð´ÐµÑ€ [+switchLang+] Ð´Ð»Ñ Ð²Ñ‹Ð²Ð¾Ð´Ð° ÑÐ·Ñ‹ÐºÐ¾Ð²
 $modx->setPlaceholder("switchLang",$out);
 
 
-//ïîëó÷àåì ìàññèâ ïåðåâîäà äëÿ ÷àíêîâ â ñåññèþ
+//Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ð¼Ð°ÑÑÐ¸Ð² Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´Ð° Ð´Ð»Ñ Ñ‡Ð°Ð½ÐºÐ¾Ð² Ð² ÑÐµÑÑÐ¸ÑŽ
 $translation=$modx->getChunk('lang_'.$siteLangs[$curr_lang_id]['alias']);
 $perevod=array();
 if($translation){
