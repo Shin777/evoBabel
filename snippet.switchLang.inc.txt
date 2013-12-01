@@ -1,0 +1,86 @@
+<?php
+// значения по умолчанию на вкладке Свойства - &lang_template_id=id шаблона языка;text;11 &currlang=язык по умолчанию;text;ru
+
+//использование - вызываем в самом верху сайта [[switchLang? &id=`[*id*]`]]
+// это нужно, т.к. переводы пишем в сессию и они должны быть до того, как мы к ним обратимся
+// в нужном месте прописываем [+switchLang+] - вывод переключалки языков
+
+
+
+//шаблоны вывода по умолчанию
+$activeRow=isset($activeRow)?$activeRow:'<div id="curr_lang"><img src="assets/images/langs/flag_[+alias+].jpg"> <a href="javascript:;">[+name+]</a> <img src="site/imgs/lang_pict.jpg" alt="" id="switcher"></div>';
+$unactiveRow=isset($unactiveRow)?$unactiveRow:'<div><img src="assets/images/langs/flag_[+alias+].jpg"> &nbsp;<a href="[+url+]">[+name+]</a></div>';
+$unactiveOuter=isset($unactiveOuter)?$unactiveOuter:'<div class="other_langs">[+wrapper+]</div>';
+
+
+$content_table=$modx->getFullTableName('site_content');
+$tvs_table=$modx->getFullTableName('site_tmplvar_contentvalues');
+$out='';
+$langs=array();
+$others=array();//массив других языков (кроме текущего)
+
+include_once 'assets/snippets/evoBabel/functions.evoBabel.php';
+$siteLangs=getSiteLangs($lang_template_id);
+$curr_lang_id=getCurLangId($id);
+$relations=getRelations($id);
+$relArray=getRelationsArray($relations);
+
+//массив языков сайта кроме текущего
+foreach($siteLangs as $k=>$v){
+	if($k!=$curr_lang_id){
+		$others[$k]=$v;
+	}
+}
+
+//выводим текущий язык
+$currLang=str_replace(array('[+alias+]','[+name+]'),array($siteLangs[$curr_lang_id]['alias'],$siteLangs[$curr_lang_id]['name']),$activeRow);
+
+//устанавливаем и выводим прочие языки (кроме текущего)
+$unactiveRows='';
+foreach($others as $k=>$v){
+	if(isset($relArray[$v['alias']])&&checkActivePage($relArray[$v['alias']])){//если есть связь и эта страница активна
+		$url=$relArray[$v['alias']];
+	}
+	else{//нет связи либо страница не активна -> проверяем родителя
+		$parent_id=$modx->db->getValue($modx->db->query("SELECT parent FROM {$content_table} WHERE id={$id} AND published=1 AND deleted=0 AND parent!=0 AND template!=$lang_template_id"));
+		if(!$parent_id){//если нет родителя, отправляем на главную страницу языка
+			$url=$k;	
+		}
+		else{//если родитель есть, проверяем его связи
+			$parent_relations=getRelations($parent_id);
+			$relParentArray=getRelationsArray($parent_relations);
+			if(isset($relParentArray[$v['alias']])&&checkActivePage($relParentArray[$v['alias']])){//у родителя активная связь
+				$url=$relParentArray[$v['alias']];
+			}
+			else{//иначе -> на главную страницу языка
+				$url=$k;
+			}
+		}
+	}
+	$unactiveRows.=str_replace(array('[+alias+]','[+url+]','[+name+]'),array($v['alias'],$modx->makeUrl($url),$v['name']),$unactiveRow);
+}
+$otherLangs.=str_replace(array('[+wrapper+]'),array($unactiveRows),$unactiveOuter);
+
+$out.=$currLang.$otherLangs;
+
+// устанавливаем плейсхолдер [+switchLang+] для вывода языков
+$modx->setPlaceholder("switchLang",$out);
+
+
+//получаем массив перевода для чанков в сессию
+$translation=$modx->getChunk('lang_'.$siteLangs[$curr_lang_id]['alias']);
+$perevod=array();
+if($translation){
+	$translation=trim($translation);
+	$p=explode("\n",$translation);
+	foreach ($p as $v){
+		$k=explode("==",$v);
+		if($k[0]!=''){
+			$key=trim($k[0]);
+			$val=trim($k[1]);
+			$perevod[$key]=$val;
+		}
+	}
+}
+$_SESSION['perevod']=$perevod;
+?>

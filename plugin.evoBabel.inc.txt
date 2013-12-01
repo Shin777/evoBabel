@@ -1,0 +1,57 @@
+<?php
+// конфигурация  &synch_TV=ids TV для синхронизации;text;13,14 &synch_template=ids шаблонов для синхронизации;text;7
+// события  OnPageNotFound,OnDocFormSave
+
+if(!defined('MODX_BASE_PATH')){die('What are you doing? Get out of here!');}
+
+$content_table=$modx->getFullTableName('site_content');
+$tvs_table=$modx->getFullTableName('site_tmplvar_contentvalues');
+
+$e =& $modx->event;
+switch ($e->name ) {
+    case 'OnPageNotFound'://переадресация на нужную страницу 404, указать ее в языковом чанке
+		$docid=0;
+		$id=$modx->runSnippet("lang",array('a'=>'Страница не найдена'));
+		$docid=(int)$id;
+		if($docid==0){
+			$id=$modx->runSnippet("lang",array('a'=>'Главная страница'));
+			$docid=(int)$id;
+			if($docid==0){
+				$id=$modx->runSnippet("lang",array('a'=>'Корневая папка'));
+				$docid=(int)$id;
+			}
+		}
+		if($docid!=0){
+			$modx->sendRedirect($modx->makeUrl($docid));
+		}
+		break ;
+	case 'OnDocFormSave'://синхронизация выбранных TV на выбранном шаблоне
+		if($e->params['mode']=='upd'){
+			$docid=$e->params['id'];
+			include_once("functions.evoBabel.php");
+			$q=$modx->db->query("SELECT description FROM {$content_table} WHERE id={$docid} AND template IN ({$synch_template}) LIMIT 0,1");
+			if($modx->db->getRecordCount($q)==1){
+				$res=$modx->db->getRow($q);
+				$rels=$res['description'];
+				$relations=getRelationsArray($rels);
+				$q=$modx->db->query("SELECT tmplvarid,value FROM {$tvs_table} WHERE contentid={$docid} AND tmplvarid IN ({$synch_TV})");
+				while($tvs=$modx->db->getRow($q)){
+					foreach($relations as $k=>$v){
+						if($v!=$docid){
+							$q2=$modx->db->query("SELECT tmplvarid,value FROM {$tvs_table} WHERE contentid={$v} AND tmplvarid IN ({$tvs['tmplvarid']}) LIMIT 0,1");
+							if($modx->db->getRecordCount($q2)==0){
+								$modx->db->insert(array('tmplvarid'=>$tvs['tmplvarid'],'contentid'=>$v,'value'=>$tvs['value']),$tvs_table);
+							}
+							else{
+								$modx->db->update(array('value'=>$tvs['value']),$tvs_table,"tmplvarid={$tvs['tmplvarid']} AND contentid={$v}");
+							}
+						}
+					}
+				}
+			}
+		}
+	
+    default:
+        return ;
+}
+?>
