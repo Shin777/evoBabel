@@ -68,19 +68,11 @@ $modx->setPlaceholder("switchLang",$out);
 
 
 //получаем массив перевода для чанков в сессию
-$translation=$modx->getChunk('lang_'.$siteLangs[$curr_lang_id]['alias']);
 $perevod=array();
-if($translation){
-	$translation=trim($translation);
-	$p=explode("\n",$translation);
-	foreach ($p as $v){
-		$k=explode("==",$v);
-		if($k[0]!=''){
-			$key=trim($k[0]);
-			$val=trim($k[1]);
-			$perevod[$key]=$val;
-		}
-	}
+$cur_lexicon=$siteLangs[$curr_lang_id]['alias'];
+$q=$modx->db->query("SELECT * FROM ".$modx->getFullTableName('lexicon'));
+while($row=$modx->db->getRow($q)){
+	$perevod[$row['name']]=$row[$cur_lexicon];
 }
 $_SESSION['perevod']=$perevod;
 ?>
