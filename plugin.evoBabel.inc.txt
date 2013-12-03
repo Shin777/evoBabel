@@ -26,9 +26,9 @@ switch ($e->name ) {
 		}
 		break ;
 	case 'OnDocFormSave'://синхронизация выбранных TV на выбранном шаблоне
-		if($e->params['mode']=='upd'){
+		if($e->params['mode']=='upd'&&(isset($synch_template)&&$synch_template!='')&&(isset($synch_TV)&&$synch_TV!='')){
 			$docid=$e->params['id'];
-			include_once("functions.evoBabel.php");
+			include_once(MODX_BASE_PATH."assets/snippets/evoBabel/functions.evoBabel.php");
 			$q=$modx->db->query("SELECT description FROM {$content_table} WHERE id={$docid} AND template IN ({$synch_template}) LIMIT 0,1");
 			if($modx->db->getRecordCount($q)==1){
 				$res=$modx->db->getRow($q);
