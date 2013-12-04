@@ -25,36 +25,32 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED
 				echo $a;
 			break;
 			case 'save':
-				$out='';
 				foreach($_POST as $k=>$v){
 					if($k!='isNewRecord'){
-						$fields[$k]=$v;
+						$fields[$k]=$modx->db->escape($v);
 					}
-					$out.=$k.'='.$v.';';
 				}
 				if($_POST['isNewRecord']){
 					$modx->db->insert($fields,$modx->getFullTableName('lexicon'));
 				}
 			break;
 			case 'update':
-				$out='';
 				foreach($_POST as $k=>$v){
-					if($k=='id'){$id=$v;}
+					if($k=='id'){$id=(int)$v;}
 					else{
-						$fields[$k]=$v;
+						$fields[$k]=$modx->db->escape($v);
 					}
-					$out.=$k.'='.$v.';';
 				}
-				if($id){
+				if($id&&$id!=0){
 					$modx->db->update($fields,$modx->getFullTableName('lexicon'),'id='.$id);
 				}
 			break;
 			case 'destroy':
 				$out='';
 				foreach($_POST as $k=>$v){
-					if($k=='id'){$id=$v;}
+					if($k=='id'){$id=(int)$v;}
 				}
-				if($id){
+				if($id&&$id!=0){
 					$modx->db->delete($modx->getFullTableName('lexicon'),'id='.$id);
 				}
 			break;
